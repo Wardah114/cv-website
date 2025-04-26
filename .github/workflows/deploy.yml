@@ -1,0 +1,19 @@
+name: Deploy CV Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Deploy to EC2 server
+        run: |
+          sudo rm -rf /var/www/html/*
+          sudo cp -r * /var/www/html/
+          sudo systemctl restart httpd
